@@ -11,6 +11,7 @@ import us.shiroyama.android.my_repositories.hands_on_beginners.mockito.entity.Tw
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
@@ -32,6 +33,9 @@ public class TweetRepositoryWithConverterTest {
    */
   @Before
   public void setUp() throws Exception {
+    LocalTweetDataSource localTweetDataSource = spy(LocalTweetDataSource.class);
+    converter = spy(TweetConverter.class);
+    repository = new TweetRepositoryWithConverter(localTweetDataSource, converter);
   }
 
   /**
@@ -42,6 +46,8 @@ public class TweetRepositoryWithConverterTest {
    */
   @Test
   public void getTimeline() throws Exception {
+
+    verify(repository, never()).getTimeline();
   }
 
   /**
@@ -51,6 +57,7 @@ public class TweetRepositoryWithConverterTest {
    */
   @Test
   public void getTimelineBody() throws Exception {
+    verify(repository, times(1)).getTimelineBody();
   }
 
 }

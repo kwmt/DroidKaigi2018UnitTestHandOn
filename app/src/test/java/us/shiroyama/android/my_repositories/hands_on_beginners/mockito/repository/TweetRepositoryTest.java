@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,6 +31,8 @@ public class TweetRepositoryTest {
    */
   @Before
   public void setUp() throws Exception {
+    LocalTweetDataSource localTweetDataSource = mock(LocalTweetDataSource.class);
+    tweetRepository = new TweetRepository(localTweetDataSource);
   }
 
   /**
@@ -38,6 +41,14 @@ public class TweetRepositoryTest {
    */
   @Test
   public void getTimeline() throws Exception {
+    List<Tweet> tweets = new ArrayList<>();
+    tweets.add(Tweet.bodyOf("a"));
+    tweets.add(Tweet.bodyOf("b"));
+    tweets.add(Tweet.bodyOf("c"));
+
+    when(tweetRepository.getTimeline()).thenReturn(tweets);
+
+    assertThat(tweetRepository.getTimeline()).hasSize(3);
   }
 
 }
