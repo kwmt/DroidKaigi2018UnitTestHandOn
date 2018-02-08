@@ -84,6 +84,10 @@ public class GitHubRestDataSourceTest {
    */
   @Test
   public void getUserRepositories_inputSrym_returnsSuccessfulResults() throws Exception {
+    List<RepositoryEntity> repositories =gitHubRestDataSource.getUserRepositories("syrm");
+    assertThat(repositories).isNotEmpty()
+            .hasSize(30);
+    assertThat(repositories.get(0).getName()).isEqualTo("dotfiles");
   }
 
   /**
@@ -93,13 +97,19 @@ public class GitHubRestDataSourceTest {
    */
   @Test
   public void getUserRepositories_inputYmnder_returnsSuccessfulResults() throws Exception {
+    List<RepositoryEntity> repositories = gitHubRestDataSource.getUserRepositories("ymnder");
+    assertThat(repositories)
+            .isNotEmpty()
+            .hasSize(23);
+    assertThat(repositories.get(0).getName()).isEqualTo("conference-app-2018");
   }
 
   /**
    * 未定義のユーザでリクエストした場合に {@link ApiException} が上がることを検証しよう。
    */
-  @Test
+  @Test(expected = ApiException.class)
   public void getUserRepositories_inputInvalidAccount_causedApiException() throws Exception {
+    gitHubRestDataSource.getUserRepositories("hoge");
   }
 
   /**
