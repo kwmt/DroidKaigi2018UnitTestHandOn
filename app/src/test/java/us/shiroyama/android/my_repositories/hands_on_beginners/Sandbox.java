@@ -4,6 +4,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * Sandbox for Unit Test
  *
@@ -28,6 +30,8 @@ public class Sandbox {
    */
   @Test
   public void simple_assertion_for_numbers() throws Exception {
+    assertThat(1+1).isEqualTo(2);
+    assertThat(123).isGreaterThan(100);
   }
 
   /**
