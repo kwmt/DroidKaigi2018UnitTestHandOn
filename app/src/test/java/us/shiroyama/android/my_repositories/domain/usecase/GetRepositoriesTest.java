@@ -57,6 +57,9 @@ public class GetRepositoriesTest {
    */
   @Test
   public void enqueue() throws Exception {
+    GetRepositories.Param param = GetRepositories.Param.newInstance("srym");
+    getRepositories.enqueue(param);
+    verify(taskQueue, times(1)).enqueue(any(Task.class));
   }
 
   /**

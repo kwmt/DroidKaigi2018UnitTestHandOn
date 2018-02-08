@@ -71,6 +71,11 @@ public class GitHubRoomDataSourceTest {
    */
   @Before
   public void setUp() throws Exception {
+    AppDatabase db = mock(AppDatabase.class);
+    repositoryDao = mock(RoomRepositoryDao.class);
+    when(db.repositoryDao()).thenReturn(repositoryDao);
+    mapper = spy(RepositoryEntityMapper.Factory.INSTANCE.get());
+    gitHubRoomDataSource = new GitHubRoomDataSource(db, mapper);
   }
 
   /**
@@ -79,6 +84,9 @@ public class GitHubRoomDataSourceTest {
    */
   @Test
   public void getUserRepositories() throws Exception {
+    when(repositoryDao.findByAccount(eq("srym"))).thenReturn(Arrays.asList(
+            new RepoWithAccount(repositoriesSrym.get(0), srym), new RepoWithAccount(repositoriesSrym.get(1), srym)
+    ));
   }
 
   /**
