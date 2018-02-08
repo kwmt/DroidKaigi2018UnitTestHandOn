@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Build
           command: |
-              ./gradlew --offline --stacktrace assembleDebug
+              ./gradlew --stacktrace assembleDebug
 #      - run:
 #          name: Check
 #          command: |
