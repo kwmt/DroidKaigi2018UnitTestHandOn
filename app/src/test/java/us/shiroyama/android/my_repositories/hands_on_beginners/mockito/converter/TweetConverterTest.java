@@ -30,6 +30,9 @@ public class TweetConverterTest {
    */
   @Test
   public void convert() throws Exception {
+    String expect = "test";
+    String actual = converter.convert(Tweet.bodyOf(expect));
+    assertThat(actual).isEqualTo(expect);
   }
 
   /**

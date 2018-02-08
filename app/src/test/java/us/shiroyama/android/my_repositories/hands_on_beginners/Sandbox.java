@@ -47,6 +47,6 @@ public class Sandbox {
    */
   @Test
   public void simple_assertion_for_strings() throws Exception {
-      assertThat("Alice").startsWith("Bob").isNotEmpty();
+      assertThat("Alice").isNotEmpty();
   }
 }
