@@ -43,6 +43,15 @@ public class AsyncFetcherTest {
    */
   @Test
   public void fetch_success() throws Exception {
+    asyncFetcher.fetch(
+            result -> {
+              assertThat(result).isEqualTo("OK");
+              log("async: ok");
+              latch.countDown();
+            }, e -> log("async: ng")
+    );
+    latch.await();
+    log("fetch_succss: end");
   }
 
   /**
@@ -53,6 +62,17 @@ public class AsyncFetcherTest {
    */
   @Test
   public void fetch_failure() throws Exception {
+    doThrow(new RuntimeException("NG")).when(fetcher).fetch();
+    asyncFetcher.fetch(
+            result -> log("async: ok"),
+            e -> {
+              assertThat(e.getMessage()).isEqualTo("NG");
+              log("async: ng");
+              latch.countDown();
+            }
+    );
+    latch.await();
+    log("fetch_failure: end");
   }
 
   private void log(@NonNull String msg) {
