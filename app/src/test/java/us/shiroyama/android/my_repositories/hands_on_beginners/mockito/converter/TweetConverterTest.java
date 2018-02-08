@@ -3,11 +3,13 @@ package us.shiroyama.android.my_repositories.hands_on_beginners.mockito.converte
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import us.shiroyama.android.my_repositories.hands_on_beginners.mockito.entity.Tweet;
+import us.shiroyama.android.my_repositories.hands_on_beginners.mockito.repository.TweetRepositoryWithConverterTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,6 +42,7 @@ public class TweetConverterTest {
    */
   @Test
   public void convert_inputEmpty_returnsEmpty() throws Exception {
+    assertThat(converter.convert(Tweet.bodyOf(""))).isEmpty();
   }
 
   /**
@@ -49,6 +52,11 @@ public class TweetConverterTest {
    */
   @Test
   public void convertList() throws Exception {
+    List<Tweet> tweets = new ArrayList<>();
+    tweets.add(Tweet.bodyOf("a"));
+    tweets.add(Tweet.bodyOf("b"));
+    tweets.add(Tweet.bodyOf("c"));
+    assertThat(converter.convertList(tweets)).isNotEmpty().hasSize(3).containsExactly("a", "b", "c");
   }
 
   /**
@@ -56,6 +64,8 @@ public class TweetConverterTest {
    */
   @Test
   public void convertList_inputEmptyList_returnsEmptyList() throws Exception {
+    List<Tweet> tweets = new ArrayList<>();
+    assertThat(converter.convertList(tweets)).hasSize(0);
   }
 
 }
